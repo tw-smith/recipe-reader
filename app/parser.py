@@ -118,6 +118,9 @@ class VisionParser:
             }
             self.ingredient_dict.append(tmp_dict)
 
+    def return_for_flask(self):
+        return json.dumps(self.ingredient_dict, indent=6, separators=(',', ':'))
+
     def write_ingredients(self):
         with open("./output/convert.txt", "w") as convert_file:
             for entry in self.ingredient_dict:
