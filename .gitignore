@@ -1,3 +1,17 @@
+#PyCharm .idea folder
+./.idea
+
+# Image files
+/images
+
+# Google Cloud key
+plenary-office-350505-6c86322600bb.json
+
+# Text file outputs
+/output
+
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
