@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for entry in ing_text %}
+<div class="list-group">
+<p>Quantity: {{ entry.quant }}</p>
+<p>Size: {{entry.size}}</p>
+<p>Unit: {{entry.unit}}</p>
+<p>Ingredient: {{entry.ingredient}}</p>
+</div>
+{% endfor %}
+{% endblock %}
