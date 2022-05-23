@@ -1,15 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Upload File</h1>
-<form class="form-group" action="" method="POST" enctype="multipart/form-data">
+<form class="form" action="" method="POST" enctype="multipart/form-data">
   {{ form.hidden_tag() }}
-  <p>
-    {{ form.file.label }}<br>
-    {{ form.file(size=32) }}
-  </p>
-  <p>
-    {{ form.submit() }}
-  </p>
+    <label id="file-upload-label" for="file-upload" class="form__item form__submit">
+      Select File
+    </label>
+    {{ form.file(class_="form__item", id_="file-upload") }}
+    {{ form.submit(class_="form__submit form__item") }}
+
   </form>
+  <script>
+    const input = document.querySelector("#file-upload")
+    input.onchange = (e) => {
+      const [file] = e.target.files
+      var buttonText = document.getElementById("file-upload-label")
+      buttonText.innerHTML = file.name
+      console.log(file.name)
+    }
+    </script>
+
   {% endblock %}
