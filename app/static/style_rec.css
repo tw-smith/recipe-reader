@@ -15,22 +15,31 @@ html {
 /* Block Elements */
 .flex-container {
   display: flex;
+  flex-direction: column;
   width: 100vw;
-  height: 100vh;
   justify-content: center;
   align-items: center;
   background: linear-gradient(135deg, rgba(2,0,36,1) 0%, rgba(98,9,121,1) 35%, rgba(0,212,255,1) 100%);
+  overflow-y: auto;
+  flex: 0 0 auto;
 }
 
 .form {
   display: flex;
+  width: 80%;
+  height: 100vh;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+}
+
+.form__group {
+  display: flex;
+  flex-direction: column;
   background: rgba(0,0,0,0.2);
   border-radius: 0.5rem;
-  height: 50%;
-  width: 80%;
+  width: 100%
 }
 
 .form__item {
@@ -46,7 +55,6 @@ input[type="file"] {
 .form__submit {
   background-color: rgba(255,255,255,0.8);
   border-radius: 0.2rem;
-  max-width: 80%;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -54,13 +62,11 @@ input[type="file"] {
 .list {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   width: 80%;
-  height: 100%;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  scroll-behavior: auto;
-  overflow: scroll;
+  height: 100%
+  margin: auto;
+
   color: white;
 }
 

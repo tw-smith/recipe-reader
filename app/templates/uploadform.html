@@ -3,11 +3,13 @@
 {% block content %}
 <form class="form" action="" method="POST" enctype="multipart/form-data">
   {{ form.hidden_tag() }}
-    <label id="file-upload-label" for="file-upload" class="form__item form__submit">
-      Select File
-    </label>
-    {{ form.file(class_="form__item", id_="file-upload") }}
-    {{ form.submit(class_="form__submit form__item") }}
+    <div class="form__group">
+      <label id="file-upload-label" for="file-upload" class="form__item form__submit">
+        Select File
+      </label>
+      {{ form.file(class_="form__item", id_="file-upload") }}
+      {{ form.submit(class_="form__submit form__item") }}
+    </div>
 
   </form>
   <script>

@@ -3,7 +3,9 @@ from werkzeug.utils import secure_filename
 from app import app, parser as parser
 from app.forms import UploadForm
 import os
+from os.path import exists
 import imghdr
+import json
 
 
 def validate_image(stream):
@@ -13,6 +15,21 @@ def validate_image(stream):
     if not stream_format:
         return None
     return '.' + (stream_format if stream_format != 'jpeg' else 'jpg')
+
+
+def next_filename(path):
+    counter_file_path = path + "counter.txt"
+    if exists(counter_file_path):
+        with open(counter_file_path, "r") as counter:
+            count = int(counter.read())
+            count += 1
+        with open(counter_file_path, "w") as counter:
+            counter.write(str(count))
+    else:
+        count = 1
+        with open(counter_file_path, "w") as counter:
+            counter.write(str(count))
+    return str(count)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -27,14 +44,18 @@ def index():
                     file_ext != validate_image(f.stream) or \
                     f.content_length > app.config['MAX_CONTENT_LENGTH']:
                 abort(400)
-            save_filename = app.config['UPLOAD_FOLDER'] + filename
-            f.save(save_filename)
+            save_filename = next_filename(app.config['OUTPUT_FOLDER'])
+            img_filename = app.config['OUTPUT_FOLDER'] + save_filename + file_ext
+            txt_filename = app.config['OUTPUT_FOLDER'] + save_filename + '.txt'
+            f.save(img_filename)
             flash("File uploaded!")
             parse = parser.VisionParser()
-            parse.detect_text(file_path=save_filename)
+            parse.detect_text(file_path=img_filename)
             parse.parse_text()
             parse.find_ingredients()
             ing_text = parse.return_for_flask()
+            with open(txt_filename, "w") as output:
+                output.write(json.dumps(ing_text, indent=6))
             return render_template("displaylist.html", ing_text=ing_text)
 
     if request.method == 'GET':
