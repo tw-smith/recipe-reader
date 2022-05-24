@@ -40,8 +40,6 @@ def index():
         filename = secure_filename(f.filename)
         if filename != '':
             file_ext = os.path.splitext(filename)[1]
-            print(file_ext)
-            print(validate_image(f.stream))
             if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
                     file_ext != validate_image(f.stream) or \
                     f.content_length > app.config['MAX_CONTENT_LENGTH']:
