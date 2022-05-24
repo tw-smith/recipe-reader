@@ -13,7 +13,7 @@
 
   </form>
   <script>
-    const input = document.querySelector("#file-upload")
+    const input = document.getElementById("file-upload")
     input.onchange = (e) => {
       const [file] = e.target.files
       var buttonText = document.getElementById("file-upload-label")

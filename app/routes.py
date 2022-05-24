@@ -14,6 +14,9 @@ def validate_image(stream):
     stream_format = imghdr.what(None, header)
     if not stream_format:
         return None
+    else:
+        if stream_format == 'jpeg':
+            stream_format = 'jpg'
     return '.' + (stream_format)
 
 
@@ -40,6 +43,8 @@ def index():
         filename = secure_filename(f.filename)
         if filename != '':
             file_ext = os.path.splitext(filename)[1]
+            if file_ext == '.jpeg':
+                file_ext = '.jpg'
             if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
                     file_ext != validate_image(f.stream) or \
                     f.content_length > app.config['MAX_CONTENT_LENGTH']:
