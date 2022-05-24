@@ -56,7 +56,7 @@ def index():
             ing_text = parse.return_for_flask()
             with open(txt_filename, "w") as output:
                 output.write(json.dumps(ing_text, indent=6))
-            return render_template("displaylist.html", ing_text=ing_text)
+            return render_template("displaylist.html", ing_text=ing_text, file_number=save_filename)
 
     if request.method == 'GET':
         form = UploadForm()
