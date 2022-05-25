@@ -1,0 +1,75 @@
+<!-- TODO
+  load local client side image for cropping and then just send final cropped image to server
+  canvas sizing
+  colour of rubber band rectangle
+  do cropping
+  try and make area outside of rectangle have a darker transparency?
+  -->
+
+
+
+
+{% extends "base.html" %}
+
+{% block content %}
+<canvas id="democanvas" width="1000", height="1000"></canvas>
+
+
+<script>
+  function cropImg(){
+    const canvas = document.getElementById("democanvas");
+    const ctx = canvas.getContext("2d");
+    var isDrawing = false;
+    var startX;
+    var startY;
+    var offsetX = canvas.offsetLeft;
+    var offsetY = canvas.offsetTop;
+    var ratio
+
+    var image = new Image();
+    image.src = "static/5.jpg"
+
+    image.onload = function(){
+      var hRatio = canvas.width / image.width;
+      var vRatio = canvas.height / image.height;
+      ratio = Math.min(hRatio,vRatio);
+      ctx.drawImage(image,0,0,image.width,image.height,0,0,image.width*ratio,image.height*ratio);
+    };
+    canvas.onmousedown = (e) => {
+      canvas.style.cursor = "crosshair"
+      isDrawing = true;
+      startX = parseInt(e.clientX - offsetX);
+      startY = parseInt(e.clientY - offsetY);
+    }
+
+    canvas.onmouseup = (e) => {
+      canvas.style.cursor = "default"
+      isDrawing = false;
+    }
+
+    canvas.onmousemove = (e) => {
+      if (isDrawing) {
+        var mouseX = parseInt(e.clientX - offsetX);
+        var mouseY = parseInt(e.clientY - offsetY);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.drawImage(image,0,0,image.width,image.height,0,0,image.width*ratio,image.height*ratio);
+        ctx.beginPath();
+        ctx.rect(startX, startY, mouseX - startX, mouseY - startY);
+        ctx.stroke();
+
+
+      }
+    }
+
+
+
+
+
+
+  };
+  cropImg();
+
+
+</script>
+
+{% endblock %}

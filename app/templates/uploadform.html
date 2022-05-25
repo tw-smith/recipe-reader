@@ -10,16 +10,6 @@
       {{ form.file(class_="form__item", id_="file-upload") }}
       {{ form.submit(class_="form__submit form__item") }}
     </div>
-
   </form>
-  <script>
-    const input = document.getElementById("file-upload")
-    input.onchange = (e) => {
-      const [file] = e.target.files
-      var buttonText = document.getElementById("file-upload-label")
-      buttonText.innerHTML = file.name
-      console.log(file.name)
-    }
-    </script>
 
   {% endblock %}
