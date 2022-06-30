@@ -11,31 +11,34 @@ function previewImg() {
   const file = document.querySelector("#file-upload").files[0];
   const reader = new FileReader();
   var image = new Image();
-  var ratio
-  var hRatio
-  var vRatio
 
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      image.src = reader.result;
-      console.log(image.src)
-      hRatio = canvas2.width / image.width;
-      vRatio = canvas2.height / image.height;
-      ratio = Math.min(hRatio,vRatio);
+
+  reader.readAsDataURL(file);
+  reader.onload = function () {
+    let ratio
+    let hRatio
+    let vRatio
+    image.src = reader.result;
+    console.log(image.src)
+    hRatio = canvas2.width / image.width;
+    vRatio = canvas2.height / image.height;
+  //  ratio = Math.min(hRatio,vRatio);
+    ratio = 0.25;
+    image.onload = () => { // This image.onload function is required to make the image preview appear. Without it the image preview only appears when stepping through the JS in debug mode.
       ctx2.drawImage(image,0,0,image.width,image.height,0,0,image.width*ratio,image.height*ratio);
-    }
-
-
-
-
+    };
+    
+  }
 };
 
+
+// Code below is old - keeping here for now to refer to whilst building new client side image preview functionality above
 //
 // function cropImg(){
 //   console.log("in cropImg")
 //   const canvas = document.getElementById("democanvas");
 //   const ctx = canvas.getContext("2d");
-//   var isDrawing = false;
+//   var isDrawing = fa lse;
 //   var startX;
 //   var startY;
 //   var deltaX;
