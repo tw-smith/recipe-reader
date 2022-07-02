@@ -62,9 +62,10 @@ def save_file(f):
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':  # TODO: more robust validation and error messages
+        # TODO put functionality to upload image back in - need to pull cropped image from canvas
         f = request.files['file']
         img_filename = save_file(f)
-        return render_template("cropper.html", img_filename=img_filename)
+       # return render_template("cropper.html", img_filename=img_filename)
 
     if request.method == 'GET':
         form = UploadForm()
