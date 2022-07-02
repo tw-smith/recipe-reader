@@ -1,6 +1,7 @@
+const canvas = document.getElementById("democanvas");
+const ctx = canvas.getContext("2d");
+
 function previewImg() {
-  const canvas = document.getElementById("democanvas");
-  const ctx = canvas.getContext("2d");
   const file = document.querySelector("#file-upload").files[0];
   const reader = new FileReader();
   var image = new Image();
@@ -47,11 +48,9 @@ function previewImg() {
         endY = mouseY;
         deltaX = mouseX - startX;
         deltaY = mouseY - startY;
-        console.log(startX)
-        console.log(deltaX)
         ctx.rect(startX, startY, deltaX, deltaY);
         ctx.stroke();
-        ctx.strokeText(mouseX,100,0)
+        ctx.strokeText(mouseX,100,0) //TODO what are these here for
         ctx.strokeText(mouseY,200,0)
       }
     }
@@ -79,3 +78,18 @@ function previewImg() {
     ctx.drawImage(image,startX/vRatio,startY/vRatio,cropWidth,cropHeight,0,0,cropWidth*hRatio,cropHeight*vRatio);
   }
 };
+
+document.getElementById("submit-image-button").onclick = () => {
+  imgDataURL = canvas.toDataURL();
+  console.log("post data url");
+  console.log(imgDataURL);
+
+  fetch('http://127.0.0.1:5000/', {
+    method: 'POST',
+    body: imgDataURL
+  })
+  .then(response => response.json()) //FIXME returns TypeError: NetworkError when attempting to fetch resource
+  .then(json => console.log(json))
+  .catch(err => console.log('request failed', err));
+
+}
