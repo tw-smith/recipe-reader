@@ -1,4 +1,6 @@
-from flask import render_template, request, redirect, flash, abort
+import logging
+from flask import jsonify, render_template, request, redirect, flash, abort
+from flask_cors import cross_origin
 from werkzeug.utils import secure_filename
 from app import app, parser as parser
 from app.forms import UploadForm
@@ -61,12 +63,16 @@ def save_file(f):
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+    logging.getLogger('flask_cors').level = logging.DEBUG
     if request.method == 'POST':  # TODO: more robust validation and error messages
         # TODO put functionality to upload image back in - need to pull cropped image from canvas
         #f = request.files['file']
         #mg_filename = save_file(f)
         print("post request")
-        return render_template("index.html")
+        response = jsonify(message="post request response")
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response
+        #return render_template("index.html")
        # return render_template("cropper.html", img_filename=img_filename)
 
     if request.method == 'GET':
