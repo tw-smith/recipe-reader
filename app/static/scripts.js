@@ -6,7 +6,7 @@ function previewImg() {
   const reader = new FileReader();
   var image = new Image();
   var ratio, hRatio, vRatio
-  let offsetX, offsetY, startX, startY, deltaX, deltaY, endX, endY, isDrawing = false, cropRatio;
+  var offsetX, offsetY, startX, startY, deltaX, deltaY, endX, endY, isDrawing = false, cropRatio;
 
 
   reader.readAsDataURL(file);
@@ -67,13 +67,17 @@ function previewImg() {
   //  console.log(hCropRatio)
   //  console.log(vCropRatio)
   //  console.log(cropRatio)
-    console.log(startX/hRatio)
-    console.log(startY/vRatio)
+    console.log("startX")
+    console.log(startX)
+    console.log("endX")
+    console.log(endX)
     console.log(cropWidth)
     console.log(cropHeight)
     console.log(offsetX)
 
     // FIXME draws a blank canvas
+   // console.log("cropper")
+    //console.log(image)
     ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.drawImage(image,startX/vRatio,startY/vRatio,cropWidth,cropHeight,0,0,cropWidth*hRatio,cropHeight*vRatio);
   }
